@@ -1,80 +1,43 @@
-{% paginate search.results by 10 %}
-
-  <h1>
+<div class="container">
+  <div class="search_title_heading">
+   
+    {% comment %} <div class="search_input_box_wrapper">
+      <form class="search_input_box_wrapper" action="{{ routes.search_url }}">
+        <input
+          class="search_field"
+          type="text"
+          placeholder="Search product"
+          name="q"
+          value="{{ search.terms | escape }}"
+        >
+        <input type="hidden" name="type" value="product,page">
+        <input type="hidden" name="options[unavailable_products]" value="hide">
+        <input type="hidden" name="options[prefix]" value="last">
+        <input class="search_icon" type="submit" value="Search">
+      </form>
+    </div> {% endcomment %}
     {% if search.performed %}
-      <span class="visually-hidden">{{ 'general.search.heading' | t: count: search.results_count }}:</span>
-        {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
-    {% else %}
-      {{ 'general.search.title' | t }}
+      <h3 class="mb-3">Search results</h3>
+      <span class="pt-2"> {{ search.results_count }} results found for "{{ search.terms | escape }}" </span>
+      {%- else -%}
+        <h3>Search Something what you want !!!</h3>
     {% endif %}
-  </h1>
+    
+  </div>
 
-  <form action="/search" method="get" role="search">
-    <label for="Search" class="label-hidden">
-      {{ 'general.search.placeholder' | t }}
-    </label>
-    <input type="search"
-           name="q"
-           id="Search"
-           value="{{ search.terms | escape }}"
-           placeholder="{{ 'general.search.placeholder' | t }}">
-    <button type="submit" class="button">
-      {% include 'icon-search' %}
-      <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
-    </button>
-  </form>
-
-  {% if search.performed %}
-    {% if search.results_count == 0 %}
-      <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
-    {% else %}
-      <h2 class="visually-hidden">{{ 'general.search.heading' | t: count: search.results_count }}</h2>
-      <ul>
-        {% for item in search.results %}
-          <li>
-            <a href="{{ item.url | within: collection }}">
-              {% assign featured_image = item.image | default: item.featured_image %}
-              {% if featured_image != blank %}
-                {{ featured_image | img_url: '240x240' | img_tag }}
-              {% endif %}
-              <h3>{{ item.title }}</h3>
-            </a>
-            {% if item.object_type == 'product' %}
-              <p>
-                {% if item.compare_at_price > item.price %}
-                  {% if item.price_varies %}
-                    {% assign sale_price = item.price | money %}
-                    {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
-                  {% else %}
-                    {{ 'products.product.on_sale' | t }}
-                    <span>{{ item.price | money }}</span>
-                  {% endif %}
-                  <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-                  <s>{{ item.compare_at_price | money }}</s>
-                {% else %}
-                  {% if item.price_varies %}
-                    {% assign price = item.price | money %}
-                    <span>{{ 'products.product.from_text_html' | t: price: price }}</span>
-                  {% else %}
-                    <span>{{ item.price | money }}</span>
-                  {% endif %}
-                {% endif %}
-                {% unless item.available %}
-                {{ 'products.product.sold_out' | t }}
-                {% endunless %}
-              </p>
-            {% else %}
-              <p>{{ item.content | strip_html | truncatewords: 50 }}</p>
-            {% endif %}
-
-          </li>
-        {% endfor %}
-      </ul>
-
-      {% if paginate.pages > 1 %}
-        {% include 'pagination' %}
-      {% endif %}
-    {% endif %}
-  {% endif %}
-
-{% endpaginate %}
+  <div class="search_result_section mt-5">
+    <div class="search_result_item">
+      {% for item in search.results %}
+        <a style="text-decoration: none;color:black" href="{{ item.url }}">
+          <div class="card" style="max-width: 500px;height:400px;">
+          <img src="{{ item.featured_image |  img_url: 'medium' }}" class="card-img-top" alt="{{ item.title }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ item.title }}</h5>
+            <p>{{ item.price |  money_with_currency }}</p>
+          </div>
+        </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>

@@ -16,6 +16,10 @@
     <title>{{ shop.name }}</title>
    {{'theme.css' |  asset_url |  stylesheet_tag}}
    {{'header.css' |  asset_url |  stylesheet_tag}}
+   {{'featured.css' |  asset_url |  stylesheet_tag}}
+   {{'showslider.css' |  asset_url |  stylesheet_tag}}
+   <script src="{{ 'showslider.js' |  asset_url }}" defer="defer"></script>
+   <script src="{{ 'header.js' |  asset_url }}" defer="defer"></script>
     
   </head>
   <body>

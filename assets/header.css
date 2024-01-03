@@ -68,3 +68,8 @@ svg {
     cursor: pointer;
     color: white;
 }
+.search_title_heading{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

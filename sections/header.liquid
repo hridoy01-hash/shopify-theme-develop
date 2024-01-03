@@ -9,25 +9,25 @@
         <div class="header_left_side_content">
           <div class="logo_wrapper">
             {%- if settings.Logo != null -%}
-              <img src="{{ settings.Logo |  img_url:'original'}}" style="width: 100px;" alt="{{ shop.name }}">
+              <a href="{{ routes.root_url }}">
+                <img src="{{ settings.Logo |  img_url:'original'}}" style="width: 100px;" alt="{{ shop.name }}">
+              </a>
             {%- else -%}
-              <h3>{{ shop.name }}</h3>
+             <a href="{{ routes.root_url }}"> <h3>{{ shop.name }}</h3></a>
             {%- endif -%}
           </div>
         </div>
         <div class="header_middle_content">
           <div class="search_input_box_wrapper">
-            <form class="search_input_box_wrapper" action="{{ routes.search_url }}">
+            <form autocomplete="off" class="search_input_box_wrapper" action="{{ routes.search_url }}">
               <input
                 class="search_field"
                 type="text"
                 placeholder="Search product"
                 name="q"
                 value="{{ search.terms | escape }}"
+                autocomplete="off"
               >
-              <input type="hidden" name="type" value="product,page">
-              <input type="hidden" name="options[unavailable_products]" value="hide">
-              <input type="hidden" name="options[prefix]" value="last">
               <input class="search_icon" type="submit" value="Search">
             </form>
           </div>

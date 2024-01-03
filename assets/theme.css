@@ -7,10 +7,16 @@
 
 body {
     margin: 0;
+    position: relative;
 }
 
 .container {
     max-width: 1340px;
     margin: 0 auto;
     padding: 0px 20px;
+}
+.search_result_item{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 15px;
 }
