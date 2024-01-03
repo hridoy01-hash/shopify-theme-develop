@@ -1,3 +1,7 @@
+{%- liquid
+  assign menuItem = section.settings.menu_link
+-%}
+
 <div class="header_wrapper universal">
   <div class="header_inner_content_wrapper">
     <div class="container">
@@ -13,19 +17,19 @@
         </div>
         <div class="header_middle_content">
           <div class="search_input_box_wrapper">
-            <input class="search_field" type="text" placeholder="Search product">
-            <span class="search_icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="19"
-                height="19"
-                fill="currentColor"
-                class="bi bi-search"
-                viewBox="0 0 16 16"
+            <form class="search_input_box_wrapper" action="{{ routes.search_url }}">
+              <input
+                class="search_field"
+                type="text"
+                placeholder="Search product"
+                name="q"
+                value="{{ search.terms | escape }}"
               >
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-              </svg>
-            </span>
+              <input type="hidden" name="type" value="product,page">
+              <input type="hidden" name="options[unavailable_products]" value="hide">
+              <input type="hidden" name="options[prefix]" value="last">
+              <input class="search_icon" type="submit" value="Search">
+            </form>
           </div>
         </div>
         <div class="header_right_side_content">
@@ -76,8 +80,30 @@
       <div class="header_menu_area">
         <div class="menu_item_wrapper">
           <ul class="menu_item_List_wrapper">
-            <li class="menu_item">Menu1</li>
-            <li class="menu_item">Menu2</li>
+            {%- for link in menuItem.links -%}
+              <li class="menu_item">
+                <a
+                  style="text-decoration: none;color:black;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+                  href="{{ link.url }}"
+                >
+                  {{- link.title -}}
+                </a>
+                {%- if link.links.size > 0 -%}
+                  <ul class="submenu_wrapper">
+                    {% for dropLink in link.links %}
+                      <li class="sub_menu">
+                        <a
+                          style="text-decoration: none;color:black;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+                          href="{{ dropLink.url }}"
+                        >
+                          {{- dropLink.title -}}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
           </ul>
         </div>
       </div>

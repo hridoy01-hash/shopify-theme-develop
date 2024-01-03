@@ -11,15 +11,30 @@
     list-style: none;
     gap: 40px;
 }
+.submenu_wrapper {
+	display: none;
+	flex-direction: column;
+	gap: 6px;
+	position: absolute;
+	transition: all 0.3s linear;
+	width: 205px;
+	padding: 10px 10px;
+	background: burlywood;
+}
 
 .header_icon_list,
-.menu_item {
+.menu_item,.sub_menu{
     list-style: none;
     cursor: pointer;
+    position: relative;
+    transition: all 0.3s linear;
+}
+.menu_item:hover .submenu_wrapper{
+    display: flex;
 }
 
 .header_inner_content_wrapper {
-    background-color: rgb(226, 203, 208);
+    background-color: rgb(247, 247, 247);
     padding: 15px 0px;
 }
 
@@ -49,7 +64,7 @@ svg {
 }
 .search_icon {
 	background-color: rgb(131, 129, 129);
-	padding: 9px 10px;
-    margin-top: 2px;
+	padding: 6px 10px;
     cursor: pointer;
+    color: white;
 }
