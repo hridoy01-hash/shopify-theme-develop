@@ -3,30 +3,7 @@
     "sections": {
       "collection-list": {
         "type": "collection-list",
-        "blocks": {
-          "collection-list-0": {
-            "type": "collection",
-            "settings": {
-            }
-          },
-          "collection-list-1": {
-            "type": "collection",
-            "settings": {
-            }
-          },
-          "collection-list-2": {
-            "type": "collection",
-            "settings": {
-            }
-          }
-        },
-        "block_order": [
-          "collection-list-0",
-          "collection-list-1",
-          "collection-list-2"
-        ],
-        "settings": {
-        }
+        "settings": {}
       },
       "featured-collection": {
         "type": "featured-collection",
@@ -36,8 +13,7 @@
       },
       "featured-product": {
         "type": "featured-product",
-        "settings": {
-        }
+        "settings": {}
       }
     },
     "content_for_index": [
@@ -49,33 +25,6 @@
   "presets": {
     "Default": {
       "sections": {
-        "collection-list": {
-          "type": "collection-list",
-          "blocks": {
-            "collection-list-0": {
-              "type": "collection",
-              "settings": {
-              }
-            },
-            "collection-list-1": {
-              "type": "collection",
-              "settings": {
-              }
-            },
-            "collection-list-2": {
-              "type": "collection",
-              "settings": {
-              }
-            }
-          },
-          "block_order": [
-            "collection-list-0",
-            "collection-list-1",
-            "collection-list-2"
-          ],
-          "settings": {
-          }
-        },
         "featured-collection": {
           "type": "featured-collection",
           "settings": {
@@ -84,12 +33,10 @@
         },
         "featured-product": {
           "type": "featured-product",
-          "settings": {
-          }
+          "settings": {}
         }
       },
       "content_for_index": [
-        "collection-list",
         "featured-collection",
         "featured-product"
       ]

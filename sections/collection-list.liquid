@@ -14,23 +14,23 @@
       <div class="s1306_category_products_area">
         <div class="s1306_category_all_product">
           <!-- s1306_single_product -->
-          {% if collectionlist != empty %}
+          {% if collectionLists %}
             {% for collectionList in collectionLists %}
               <a href="{{ collectionList.url }}">
                 <div class="s1306_single_product">
-                <div class="s1306_product_top">
-                  <div class="s1306_product_img_wrapper">
-                    <div class="s1306_product_img">
-                      <img src="{{ collectionList.featured_image |  img_url: 'medium' }}" alt="category_item">
+                  <div class="s1306_product_top">
+                    <div class="s1306_product_img_wrapper">
+                      <div class="s1306_product_img">
+                        <img src="{{ collectionList.featured_image |  img_url: 'medium' }}" alt="category_item">
+                      </div>
                     </div>
-                  </div>
-                  <div class="s1306_product_content_wrapper">
-                    <div class="s1306_product_name_wrapper">
-                      <p class="s1306_product_name">{{ collectionList.title }}</p>
+                    <div class="s1306_product_content_wrapper">
+                      <div class="s1306_product_name_wrapper">
+                        <p class="s1306_product_name">{{ collectionList.title }}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
               </a>
             {% endfor %}
           {%- else -%}
@@ -38,7 +38,9 @@
           {% endif %}
         </div>
         <div class="s1306_view_all_btn_wrapper">
-          <button type="button" class="s1306_view_all_btn s1306_common_btn">View All</button>
+          <a href="/collections" style="text-decoration: none;">
+            <button type="button" class="s1306_view_all_btn s1306_common_btn">View All</button></a
+          >
         </div>
       </div>
     </div>
@@ -46,7 +48,7 @@
 </section>
 {% schema %}
 {
-  "name": "Featured Collection",
+  "name": "Collection List",
   "class": "featured_collection",
   "settings": [
     {
@@ -64,7 +66,7 @@
   ],
   "presets": [
     {
-      "name": "Featured Collection",
+      "name": "Collection List",
       "category": "Collection",
       "blocks": [],
       "settings": {

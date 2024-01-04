@@ -4,7 +4,6 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -14,26 +13,26 @@
     >
     {{ content_for_header }}
     <title>{{ shop.name }}</title>
-   {{'theme.css' |  asset_url |  stylesheet_tag}}
-   {{'header.css' |  asset_url |  stylesheet_tag}}
-   {{'featured.css' |  asset_url |  stylesheet_tag}}
-   {{'showslider.css' |  asset_url |  stylesheet_tag}}
-   <script src="{{ 'showslider.js' |  asset_url }}" defer="defer"></script>
-   <script src="{{ 'header.js' |  asset_url }}" defer="defer"></script>
-    
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'header.css' | asset_url | stylesheet_tag }}
+    {{ 'featured.css' | asset_url | stylesheet_tag }}
+    {{ 'showslider.css' | asset_url | stylesheet_tag }}
+    {{ 'list-collection.css' | asset_url | stylesheet_tag }}
+    {{ 'product.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'showslider.js' |  asset_url }}" defer="defer"></script>
+    <script src="{{ 'header.js' |  asset_url }}" defer="defer"></script>
+    <script src="{{ 'product.js' |  asset_url  }}" defer="defer"></script>
   </head>
   <body>
+    {% sections 'header-group' %}
 
+    <div id="main_section" class="main">
+      {{ content_for_layout }}
+    </div>
 
-   {% sections 'header-group' %}
-    
-   <div id="main_section" class="main">
-    {{ content_for_layout }}
-   </div>
+    {% sections 'footer-group' %}
 
-{% sections 'footer-group' %}
-    
-  <script
+    <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"

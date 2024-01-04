@@ -1,0 +1,19 @@
+{% comment %}
+  receved blog
+{% endcomment %}
+
+<div class="s1308_single_product">
+  <div class="s1308_single_product_top">
+    <div class="s1308_product_img_wrapper">
+      <img src="{{ blog.image |  img_url: 'medium' }}" alt="item">
+    </div>
+  </div>
+  <div class="s1308_single_product_bottom">
+    <div class="s1308_single_product_bottom_content">
+      <div class="s1308_product_name_wrapper">
+        <p class="s1308_product_name">Title : {{ blog.title }}</p>
+        <p class="s1308_product_name" style="color:rgb(179, 179, 179)">Description: {{ blog.content | truncate: 100}}</p>
+      </div>
+    </div>
+  </div>
+</div>

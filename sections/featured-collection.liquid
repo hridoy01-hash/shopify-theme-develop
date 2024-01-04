@@ -1,85 +1,128 @@
-{%- comment -%}
-  This is a required section for the Shopify Theme Store.
-  It is available when you add "Collection list" section in the Theme Editor.
+{%- liquid
+  assign collections = section.settings.collection
+  assign CollectionTitle = section.settings.CollectionTitle
+-%}
 
-  Theme Store required settings
-  - Heading: title of the collection list section
-  - Collection
-{%- endcomment -%}
-<section class="collection-list">
-  {% if section.settings.title != blank %}
-    <h2 class="collection-list__title">{{ section.settings.title | escape }}</h2>
-  {% endif %}
-
-  {% for block in section.blocks %}
-    {%- assign collection = collections[block.settings.collection] -%}
-
-    <a href="{{ collection.url | default: "#" }}" class="collection-list-item" {{ block.shopify_attributes }}>
-      {% if collection.image != blank or collection.products.first != blank %}
-        {%- assign image_object = collection.image | default: collection.products.first.featured_image -%}
-        <div class="collection-list__image">
-          {% include 'responsive-image' with
-            image: image_object,
-            max_width: 480,
-            max_height: 480
-          %}
+<section class="s1308_all_items_section s1308_universl">
+  <div class="s1308_container">
+    <div class="s1308_all_items_area">
+      <!-- s1308_all_items_top -->
+      <div class="s1308_all_items_top">
+        <div class="s1308_all_items_top_wrapper">
+          <div class="s1308_all_items_title_wrapper">
+            <p class="s1308_all_items_title">{{ CollectionTitle }}</p>
+          </div>
         </div>
-      {% elsif collection == empty %}
-        {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-        {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+      </div>
+      <!-- s1308_all_items_bottom -->
+      {%  if collections %} 
+        <div class="s1308_all_items_bottom">
+          <!-- s1308_all_products -->
+          <div class="s1308_all_products">
+            {% for item in collections.products limit: 10 %}
+              <!-- s1308_single_product -->
+              <div class="s1308_single_product">
+                <div class="s1308_single_product_top">
+                  <div class="s1308_product_img_wrapper">
+                    <img src="{{ item.featured_image |  img_url: 'medium' }}" alt="{{ item.title }}">
+                  </div>
+                  <div class="s1308_wishlist_and_cart_icon_wrapper">
+                    <div class="s1308_wishlist_icon_wrapper">
+                      <span class="s1308_wishlist_icon s1308_active_wishlist">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="11.004"
+                          height="10.438"
+                          viewBox="0 0 11.004 10.438"
+                        >
+                          <path id="heart_1_" data-name="heart (1)" d="M7.286.917A2.666,2.666,0,0,0,5,2.291,2.666,2.666,0,0,0,2.7.917,2.832,2.832,0,0,0,0,3.853C0,6.675,4.56,9.934,4.754,10.072l.241.17.241-.17c.194-.137,4.757-3.4,4.757-6.219A2.832,2.832,0,0,0,7.286.917Z" transform="translate(0.507 -0.417)" fill="none" stroke="#fff" stroke-width="1"/>
+                        </svg>
+                      </span>
+                    </div>
+                    <div class="s1308_cart_icon_wrapper">
+                      <span class="s1308_cart_icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="9.999" viewBox="0 0 10 9.999">
+                          <g id="shopping-cart_1_" data-name="shopping-cart (1)" transform="translate(-6.5 -5.5)">
+                            <g id="Union_12" data-name="Union 12" transform="translate(6.5 5.5)" fill="none">
+                              <path d="M6.25,9.166A.833.833,0,1,1,7.083,10,.832.832,0,0,1,6.25,9.166Zm-4.167,0A.833.833,0,1,1,2.917,10,.833.833,0,0,1,2.083,9.166Zm.741-1.249a1.252,1.252,0,0,1-1.241-1.1L.923,1.2A.417.417,0,0,0,.509.833H0V0H.509A1.25,1.25,0,0,1,1.75,1.1l.018.146H10l-.9,5H2.355l.055.465a.416.416,0,0,0,.414.368H8.333v.834Z" stroke="none"/>
+                              <path d="M 8.262781143188477 5.249513626098633 L 8.803603172302246 2.249513864517212 L 2.053110599517822 2.249513864517212 L 2.406054496765137 5.249513626098633 L 8.262781143188477 5.249513626098633 M 7.083499908447266 9.999263763427734 C 6.622560024261475 9.999263763427734 6.25 9.625973701477051 6.25 9.165773391723633 C 6.25 8.705563545227051 6.622560024261475 8.333253860473633 7.083499908447266 8.333253860473633 C 7.543459892272949 8.333253860473633 7.916019916534424 8.705563545227051 7.916019916534424 9.165773391723633 C 7.916019916534424 9.625973701477051 7.543459892272949 9.999263763427734 7.083499908447266 9.999263763427734 Z M 2.916990041732788 9.999263763427734 C 2.457030057907104 9.999263763427734 2.083499908447266 9.625973701477051 2.083499908447266 9.165773391723633 C 2.083499908447266 8.705563545227051 2.457030057907104 8.333253860473633 2.916990041732788 8.333253860473633 C 3.376950025558472 8.333253860473633 3.749510049819946 8.705563545227051 3.749510049819946 9.165773391723633 C 3.749510049819946 9.625973701477051 3.376950025558472 9.999263763427734 2.916990041732788 9.999263763427734 Z M 8.33251953125 7.91650390625 L 2.824219942092896 7.91650390625 C 2.190429925918579 7.915773868560791 1.657719969749451 7.441164016723633 1.583009958267212 6.812253952026367 L 0.9228500127792358 1.200923800468445 C 0.8979499936103821 0.9914537668228149 0.7202200293540955 0.8327637910842896 0.5092800259590149 0.8327637910842896 L 0 0.8327637910842896 L 0 3.789062475334504e-06 L 0.5092800259590149 3.789062475334504e-06 C 1.142580032348633 3.789062475334504e-06 1.675780057907104 0.4743638038635254 1.75 1.103763818740845 L 1.767580032348633 1.249513745307922 L 10 1.249513745307922 L 9.098629951477051 6.249513626098633 L 2.355469942092896 6.249513626098633 L 2.410640001296997 6.71484375 C 2.435060024261475 6.924314022064209 2.612299919128418 7.082763671875 2.824219942092896 7.082763671875 L 8.33251953125 7.082763671875 L 8.33251953125 7.91650390625 Z" stroke="none" fill="#fff"/>
+                            </g>
+                          </g>
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="s1308_single_product_bottom">
+                  <div class="s1308_single_product_bottom_content">
+                    <div class="s1308_product_name_wrapper">
+                      <p class="s1308_product_name">{{ item.title }}</p>
+                    </div>
+  
+                    <div class="s1308_price_box_hidden">
+                      <div class="s1308_price_box_hidden_wrapper">
+                        <div class="s1308_product_price_wrapper">
+                          <span class="s1308_product_price s1308_product_present_price">
+                            {% if item.price_varies %}
+                              From {{ item.price_min | money }} - {{ item.price_max | money -}}
+  
+                            {% elsif item.compare_at_price %}
+                              {{ item.price | money_with_currency }}  <del>{{ item.compare_at_price | money }}</del>
+  
+                            {% else %}
+                              {{ item.price | money_with_currency }}
+                            {% endif %}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {%- else -%}
+                <h3 class="text-center">Please Select a Category what you want to Featured</h3>
+            {% endfor %}
+          </div>
+          <!-- s1308_all_items_btn_wrapper -->
+          <div class="s1308_all_items_btn_wrapper">
+            <a href="{{ collections.url }}" style="text-decoration: none;">
+              <button type="button" class="s1308_all_items_btn s1308_common_btn">View All</button>
+            </a>
+          </div>
+        </div>
       {% endif %}
-
-      {%- assign default_label = 'homepage.onboarding.collection_title' | t -%}
-      <p>{{ collection.title | default: default_label }}</p>
-    </a>
-  {% endfor %}
-
-  {% if section.blocks.size == 0 %}
-    {% include 'no-blocks' %}
-  {% endif %}
+     
+    </div>
+  </div>
 </section>
 
 {% schema %}
-  {
-    "name": "Collection list",
-    "max_blocks": 12,
-    "settings": [
-      {
-        "type": "text",
-        "id": "title",
-        "label": "Heading",
-        "default": "Collection list"
+{
+  "name": "Featured Collection",
+  "class": "featured_collection_wrapper",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "CollectionTitle",
+      "label": "Title",
+      "default": "Write title"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection",
+      "category": "collections",
+      "blocks": [],
+      "settings": {
+        "CollectionTitle" : "Write title",
+        "collection" : "outdoor-collection"
       }
-    ],
-    "blocks": [
-      {
-        "type": "collection",
-        "name": "Collection",
-        "settings": [
-          {
-            "label": "Collection",
-            "id": "collection",
-            "type": "collection"
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "Collection list",
-        "category": "Collection",
-        "blocks": [
-          {
-            "type": "collection"
-          },
-          {
-            "type": "collection"
-          },
-          {
-            "type": "collection"
-          }
-        ]
-      }
-    ]
-  }
+    }
+  ]
+}
 {% endschema %}
