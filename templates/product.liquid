@@ -7,14 +7,24 @@
         <div class="s130F_item_details_left_content">
           <!-- s130F_large_item_image -->
           <div class="s130F_large_item_image">
-            <img src="{{ product.selected_or_first_available_variant.featured_image |  img_url: 'master' }}" alt="{{ product.title }}">
+            {% if product.selected_or_first_available_variant.featured_image %}
+              {% assign featured = product.selected_or_first_available_variant.featured_image %}
+              <img
+                id="display_img"
+                src="{{ featured |  img_url: 'master' }}"
+                alt="{{ product.title }}"
+              >
+            {%- else -%}
+              {% assign featured = product.featured_image %}
+              <img src="{{ product.featured_image |  img_url: 'master'}}" alt="">
+            {% endif %}
           </div>
           <!-- s130F_gallery_image_wrapper -->
           <div class="s130F_gallery_image_wrapper">
             <div class="s130F_gallery_image">
               {% for image in product.images %}
-                <div class="s0210_single_image s0210_gallery_image_active">
-                  <img src="{{ image.src |  img_url: 'master' }}" alt="{{ product.title }}">
+                <div class="s0210_single_image {% if image == featured %} img_select {% endif %}">
+                  <img class="galary_img" src="{{ image.src |  img_url: 'master' }}" alt="{{ product.title }}">
                 </div>
               {% endfor %}
             </div>
@@ -35,18 +45,25 @@
             <div class="s130F_product_price_wrapper">
               <div class="s1308_product_price_wrapper">
                 <span class="s1308_product_price s1308_product_present_price">
-                 <p class="compare_price">
-                  {{ product.selected_or_first_available_variant.price |  money_with_currency}}
-                 </p>
-                 <p>
-                   <del class="product_price">{{ product.selected_or_first_available_variant.compare_at_price |  money_with_currency }}</del>
-                 </p>
+                  <p class="product_price">
+                    {{ product.selected_or_first_available_variant.price | money_with_currency }}
+                  </p>
+                  <p>
+                    <del class="compare_price">
+                      {{- product.selected_or_first_available_variant.compare_at_price | money_with_currency -}}
+                    </del>
+                  </p>
                 </span>
               </div>
             </div>
 
             {% form 'product', product %}
-              <input id="product_variant_id" type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <input
+                id="product_variant_id"
+                type="hidden"
+                name="id"
+                value="{{ product.selected_or_first_available_variant.id }}"
+              >
               <!-- s130F_product_variation_wrapper -->
               {%- unless product.has_only_default_variant -%}
                 <div class="s130F_product_variation_wrapper">
@@ -74,38 +91,19 @@
                   </fieldset>
                 </div>
               {%- endunless -%}
-              <input type="text" name="quantity" min="1" value="1">
+             
+              {%- render 'quantity' -%}
               <!-- s130F_cart_btn_and_wishlist_icon_wrapper -->
               <div class="s130F_cart_btn_and_wishlist_icon_wrapper">
-                <button  type="submit" value="Add to cart" style="color:white" type="button" class="s130F_cart_btn">
+                <button type="submit" value="Add to cart" style="color:white" type="button" class="s130F_cart_btn">
                   Add to Cart
                 </button>
                 <button style="color:white;" type="button" class="s130F_cart_btn">{{ form | payment_button }}</button>
-                <div class="s130F_wishlist_icon_wrapper">
-                  <span class="s130F_wishlist_icon s130F_wishlist_icon_active">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="13"
-                      height="11.916"
-                      viewBox="0 0 13 11.916"
-                    >
-                      <g id="wishlist" transform="translate(-63.99 -80)" fill="none"
-                          stroke-linecap="round" stroke-linejoin="round">
-                          <path
-                              d="M73.771,80a4.021,4.021,0,0,0-3.281,2.167A4.021,4.021,0,0,0,67.209,80a3.272,3.272,0,0,0-3.219,3.277c-.037,3.7,2.936,6.333,6.195,8.545a.542.542,0,0,0,.609,0c3.259-2.212,6.232-4.844,6.195-8.545A3.272,3.272,0,0,0,73.771,80Z"
-                              stroke="none" />
-                          <path
-                              d="M 67.20878601074219 80.99997711181641 C 65.99829864501953 80.99997711181641 65.00297546386719 82.02613830566406 64.99004364013672 83.28727722167969 C 64.95759582519531 86.51380157470703 67.70850372314453 88.90309906005859 70.48973846435547 90.81914520263672 C 73.27010345458984 88.903564453125 76.02161407470703 86.51384735107422 75.98945617675781 83.28746795654297 C 75.97652435302734 82.02613830566406 74.98118591308594 80.99997711181641 73.77068328857422 80.99997711181641 C 72.25239562988281 80.99997711181641 71.43511962890625 82.51626586914062 71.38298034667969 82.61614990234375 C 71.21636199951172 82.95758056640625 70.87324523925781 83.16969299316406 70.49314880371094 83.17202758789062 C 70.11145782470703 83.17416381835938 69.76567077636719 82.95451354980469 69.59529876708984 82.61374664306641 C 69.58722686767578 82.59761810302734 68.74543762207031 80.99997711181641 67.20878601074219 80.99997711181641 M 67.20878601074219 79.99997711181641 C 69.40644836425781 79.99997711181641 70.48972320556641 82.16653442382812 70.48972320556641 82.16653442382812 C 70.48972320556641 82.16653442382812 71.57302856445312 79.99997711181641 73.77068328857422 79.99997711181641 C 75.55674743652344 79.99997711181641 76.97112274169922 81.49420928955078 76.98941040039062 83.27721405029297 C 77.02629089355469 86.97828674316406 74.05303955078125 89.61032867431641 70.79440307617188 91.82222747802734 C 70.61056518554688 91.94732666015625 70.36891174316406 91.94733428955078 70.18507385253906 91.82222747802734 C 66.92611694335938 89.61032867431641 63.95287322998047 86.97828674316406 63.99009704589844 83.27721405029297 C 64.00837707519531 81.49420928955078 65.4227294921875 79.99997711181641 67.20878601074219 79.99997711181641 Z"
-                              stroke="none" fill="#fff" />
-                      </g>
-                    </svg>
-                  </span>
-                </div>
               </div>
             {% endform %}
             <!-- s130F_product_return_policy_wrapper -->
             <div class="s130F_product_return_policy_wrapper">
-              <p class="s130F_product_return_policy">7 Days Return | 1-5 Days Shipment</p>
+              <p class="s130F_product_return_policy">{{ product.metafields.custom.estimated_delivery }}</p>
             </div>
             <!-- s130F_product_share_media_wrapper -->
             <div class="s130F_product_share_media_wrapper">
@@ -205,7 +203,6 @@
 </div>
 <script>
   let product = {{ product |  json }}
-  console.log("product" , product);
 
   document.querySelectorAll('.product_option input[type="radio"]').forEach(radio =>{
     radio.addEventListener("change" , function(){
@@ -235,15 +232,33 @@
     document.querySelector(".compare_price").textContent = formatMoney(matchedVarient.price,"{{ shop.money_format }}") ;
     document.querySelector(".product_price").textContent = formatMoney(matchedVarient.compare_at_price,"{{ shop.money_format }}") ;
 
+
     //disabled add to cart button when selecte4d variant is not available
-    if(matchedVarient.available ==  false){
-      document.querySelector(".s130F_cart_btn").classList.add("disabled")
+    if(matchedVarient.available == false){
+      document.querySelector(".s130F_cart_btn").classList.add("btn_disabled")
+      document.querySelector(".s130F_cart_btn").setAttribute("disabled" , true)
     }else{
-      document.querySelector(".s130F_cart_btn").classList.remove("disabled");
+      document.querySelector(".s130F_cart_btn").classList.remove("btn_disabled");
+      document.querySelector(".s130F_cart_btn").removeAttribute("disabled" , true)
     }
+
+    // img update
+    const display_img = document.getElementById("display_img");
+   if(matchedVarient.featured_image){
+    display_img.src = `${matchedVarient.featured_image.src}`;
+   }else{
+    display_img.src = `${product.featured_image}`;
+   }
     
 
 
+    });
+  });
+
+  document.querySelectorAll(".s0210_single_image img").forEach(img =>{
+    img.addEventListener("click" , function(){
+      const display_img = document.getElementById("display_img");
+      display_img.src = img.src;
     })
-  })
+  });
 </script>
