@@ -1,0 +1,249 @@
+<div class="s130F_item_details_section s130F_universl">
+  <!-- s130F_item_details_area -->
+  <div class="s130F_item_details_area">
+    <div class="s130F_container">
+      <div class="s130F_item_details_content">
+        <!-- s130F_item_details_left_content -->
+        <div class="s130F_item_details_left_content">
+          <!-- s130F_large_item_image -->
+          <div class="s130F_large_item_image">
+            <img src="{{ product.selected_or_first_available_variant.featured_image |  img_url: 'master' }}" alt="{{ product.title }}">
+          </div>
+          <!-- s130F_gallery_image_wrapper -->
+          <div class="s130F_gallery_image_wrapper">
+            <div class="s130F_gallery_image">
+              {% for image in product.images %}
+                <div class="s0210_single_image s0210_gallery_image_active">
+                  <img src="{{ image.src |  img_url: 'master' }}" alt="{{ product.title }}">
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <!-- s130F_item_details_right_content -->
+        <div class="s130F_item_details_right_content">
+          <div class="s130F_item_content_area">
+            <!-- s130F_product_name_wrapper -->
+            <div class="s130F_product_name_wrapper">
+              <p class="s130F_product_name_txt">{{ product.title }}</p>
+            </div>
+            <!-- s130F_product_review_area -->
+            <div class="s130F_product_review_area">
+              <span class="s130F_product_review_number">{{ product.vendor }}</span>
+            </div>
+            <!-- s130F_product_price_wrapper -->
+            <div class="s130F_product_price_wrapper">
+              <div class="s1308_product_price_wrapper">
+                <span class="s1308_product_price s1308_product_present_price">
+                 <p class="compare_price">
+                  {{ product.selected_or_first_available_variant.price |  money_with_currency}}
+                 </p>
+                 <p>
+                   <del class="product_price">{{ product.selected_or_first_available_variant.compare_at_price |  money_with_currency }}</del>
+                 </p>
+                </span>
+              </div>
+            </div>
+
+            {% form 'product', product %}
+              <input id="product_variant_id" type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <!-- s130F_product_variation_wrapper -->
+              {%- unless product.has_only_default_variant -%}
+                <div class="s130F_product_variation_wrapper">
+                  <div class="s130F_product_variation_title_wrapper">
+                    <p class="s130F_product_variation_title">Select Variation</p>
+                  </div>
+                  <fieldset>
+                    {% for option in product.options_with_values %}
+                      <legend>{{ option.name }}</legend>
+                      <div class="product_option">
+                        {% for value in option.values %}
+                          <input
+                            type="radio"
+                            name="{{option.name}}"
+                            id="{{ option.name }} - {{ value }}"
+                            value="{{ value }}"
+                            {%- if option.selected_value == value -%}
+                              checked
+                            {%- endif -%}
+                          >
+                          <label for="{{ option.name }} - {{ value }}" value="{{ value }}">{{ value }}</label>
+                        {% endfor %}
+                      </div>
+                    {% endfor %}
+                  </fieldset>
+                </div>
+              {%- endunless -%}
+              <input type="text" name="quantity" min="1" value="1">
+              <!-- s130F_cart_btn_and_wishlist_icon_wrapper -->
+              <div class="s130F_cart_btn_and_wishlist_icon_wrapper">
+                <button  type="submit" value="Add to cart" style="color:white" type="button" class="s130F_cart_btn">
+                  Add to Cart
+                </button>
+                <button style="color:white;" type="button" class="s130F_cart_btn">{{ form | payment_button }}</button>
+                <div class="s130F_wishlist_icon_wrapper">
+                  <span class="s130F_wishlist_icon s130F_wishlist_icon_active">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="13"
+                      height="11.916"
+                      viewBox="0 0 13 11.916"
+                    >
+                      <g id="wishlist" transform="translate(-63.99 -80)" fill="none"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path
+                              d="M73.771,80a4.021,4.021,0,0,0-3.281,2.167A4.021,4.021,0,0,0,67.209,80a3.272,3.272,0,0,0-3.219,3.277c-.037,3.7,2.936,6.333,6.195,8.545a.542.542,0,0,0,.609,0c3.259-2.212,6.232-4.844,6.195-8.545A3.272,3.272,0,0,0,73.771,80Z"
+                              stroke="none" />
+                          <path
+                              d="M 67.20878601074219 80.99997711181641 C 65.99829864501953 80.99997711181641 65.00297546386719 82.02613830566406 64.99004364013672 83.28727722167969 C 64.95759582519531 86.51380157470703 67.70850372314453 88.90309906005859 70.48973846435547 90.81914520263672 C 73.27010345458984 88.903564453125 76.02161407470703 86.51384735107422 75.98945617675781 83.28746795654297 C 75.97652435302734 82.02613830566406 74.98118591308594 80.99997711181641 73.77068328857422 80.99997711181641 C 72.25239562988281 80.99997711181641 71.43511962890625 82.51626586914062 71.38298034667969 82.61614990234375 C 71.21636199951172 82.95758056640625 70.87324523925781 83.16969299316406 70.49314880371094 83.17202758789062 C 70.11145782470703 83.17416381835938 69.76567077636719 82.95451354980469 69.59529876708984 82.61374664306641 C 69.58722686767578 82.59761810302734 68.74543762207031 80.99997711181641 67.20878601074219 80.99997711181641 M 67.20878601074219 79.99997711181641 C 69.40644836425781 79.99997711181641 70.48972320556641 82.16653442382812 70.48972320556641 82.16653442382812 C 70.48972320556641 82.16653442382812 71.57302856445312 79.99997711181641 73.77068328857422 79.99997711181641 C 75.55674743652344 79.99997711181641 76.97112274169922 81.49420928955078 76.98941040039062 83.27721405029297 C 77.02629089355469 86.97828674316406 74.05303955078125 89.61032867431641 70.79440307617188 91.82222747802734 C 70.61056518554688 91.94732666015625 70.36891174316406 91.94733428955078 70.18507385253906 91.82222747802734 C 66.92611694335938 89.61032867431641 63.95287322998047 86.97828674316406 63.99009704589844 83.27721405029297 C 64.00837707519531 81.49420928955078 65.4227294921875 79.99997711181641 67.20878601074219 79.99997711181641 Z"
+                              stroke="none" fill="#fff" />
+                      </g>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            {% endform %}
+            <!-- s130F_product_return_policy_wrapper -->
+            <div class="s130F_product_return_policy_wrapper">
+              <p class="s130F_product_return_policy">7 Days Return | 1-5 Days Shipment</p>
+            </div>
+            <!-- s130F_product_share_media_wrapper -->
+            <div class="s130F_product_share_media_wrapper">
+              <div class="s130F_share_media_title_wrapper">
+                <p class="s130F_share_media_title">Share Via</p>
+              </div>
+              <nav class="s130F_social_media_nav">
+                <ul class="s130F_social_media_list">
+                  <li class="s130F_social_media_item">
+                    <a href="#" class="s130F_social_media_link">
+                      <span class="s130F_social_media_icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="6.496"
+                          height="14"
+                          viewBox="0 0 6.496 14"
+                        >
+                          <path id="Path_1689" data-name="Path 1689"
+                              d="M3.248-8.064H1.04V-9.52a.673.673,0,0,1,.208-.544.62.62,0,0,1,.4-.128H3.216v-2.4l-2.16-.016A3.071,3.071,0,0,0-.768-12.1a2.464,2.464,0,0,0-.88,1.152,3.587,3.587,0,0,0-.224,1.28v1.6H-3.248V-5.6h1.376V1.392H1.04V-5.6H2.992Z"
+                              transform="translate(3.248 12.608)" fill="#95ca33" />
+                        </svg>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="s130F_social_media_item">
+                    <a href="#" class="s130F_social_media_link">
+                      <span class="s130F_social_media_icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="15"
+                          height="15.824"
+                          viewBox="0 0 15 15.824"
+                        >
+                          <path id="Path_1688" data-name="Path 1688"
+                              d="M-.428-9.712a3.63,3.63,0,0,0-1.941.552,4.066,4.066,0,0,0-1.426,1.5,4.124,4.124,0,0,0-.531,2.056A4.171,4.171,0,0,0-3.8-3.552a3.987,3.987,0,0,0,1.426,1.5A3.681,3.681,0,0,0-.42-1.5a3.643,3.643,0,0,0,1.949-.552,4.006,4.006,0,0,0,1.418-1.5A4.171,4.171,0,0,0,3.47-5.608a4.171,4.171,0,0,0-.523-2.056,4.006,4.006,0,0,0-1.418-1.5A3.656,3.656,0,0,0-.428-9.712Zm0,6.64a2.241,2.241,0,0,1-1.206-.344,2.517,2.517,0,0,1-.88-.928,2.566,2.566,0,0,1-.326-1.272A2.521,2.521,0,0,1-2.513-6.88a2.535,2.535,0,0,1,.88-.92A2.241,2.241,0,0,1-.428-8.144,2.241,2.241,0,0,1,.778-7.8a2.535,2.535,0,0,1,.88.92,2.521,2.521,0,0,1,.326,1.264,2.566,2.566,0,0,1-.326,1.272,2.517,2.517,0,0,1-.88.928A2.241,2.241,0,0,1-.428-3.072ZM2.757-13.52h-6.37a4.024,4.024,0,0,0-2.169.624A4.4,4.4,0,0,0-7.344-11.24,4.655,4.655,0,0,0-7.92-8.96v6.7A4.655,4.655,0,0,0-7.344.024,4.4,4.4,0,0,0-5.781,1.68,4.024,4.024,0,0,0-3.613,2.3h6.37A4.1,4.1,0,0,0,4.941,1.68,4.489,4.489,0,0,0,6.488.048a4.694,4.694,0,0,0,.592-2.3v-6.7a4.694,4.694,0,0,0-.592-2.3A4.489,4.489,0,0,0,4.941-12.9,4.1,4.1,0,0,0,2.757-13.52ZM5.594-2.256a3.065,3.065,0,0,1-.379,1.5A2.885,2.885,0,0,1,4.183.336a2.675,2.675,0,0,1-1.426.4h-6.37a2.637,2.637,0,0,1-1.418-.4A2.905,2.905,0,0,1-6.054-.752a3.065,3.065,0,0,1-.379-1.5v-6.7a3.065,3.065,0,0,1,.379-1.5,2.905,2.905,0,0,1,1.024-1.088,2.637,2.637,0,0,1,1.418-.4h6.37a2.675,2.675,0,0,1,1.426.4,2.885,2.885,0,0,1,1.031,1.088,3.065,3.065,0,0,1,.379,1.5ZM3.531-10.912a.968.968,0,0,0-.728.32,1.077,1.077,0,0,0-.3.768,1.049,1.049,0,0,0,.3.76.979.979,0,0,0,.728.312.955.955,0,0,0,.72-.312,1.064,1.064,0,0,0,.3-.76,1.092,1.092,0,0,0-.3-.768A.944.944,0,0,0,3.531-10.912Z"
+                              transform="translate(7.92 13.52)" fill="#95ca33" />
+                        </svg>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="s130F_social_media_item">
+                    <a href="#" class="s130F_social_media_link">
+                      <span class="s130F_social_media_icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="14.016"
+                          height="11.376"
+                          viewBox="0 0 14.016 11.376"
+                        >
+                          <path id="Path_1687" data-name="Path 1687"
+                              d="M7.008-9.952a6.157,6.157,0,0,1-1.664.464,2.666,2.666,0,0,0,.776-.672,2.867,2.867,0,0,0,.488-.928,5.243,5.243,0,0,1-1.824.7,2.646,2.646,0,0,0-.936-.672,2.879,2.879,0,0,0-1.16-.24,2.755,2.755,0,0,0-1.44.392A2.923,2.923,0,0,0,.208-9.856a2.8,2.8,0,0,0-.384,1.44,2.9,2.9,0,0,0,.064.656,8.112,8.112,0,0,1-3.312-.9,8.193,8.193,0,0,1-2.608-2.112,2.9,2.9,0,0,0-.384,1.432A2.832,2.832,0,0,0-6.072-7.96a2.9,2.9,0,0,0,.936,1.032,2.609,2.609,0,0,1-1.3-.368v.048a2.777,2.777,0,0,0,.648,1.824,2.828,2.828,0,0,0,1.656.992,2.912,2.912,0,0,1-.768.1,2.7,2.7,0,0,1-.528-.048A2.772,2.772,0,0,0-4.416-2.968,2.786,2.786,0,0,0-2.752-2.4a5.505,5.505,0,0,1-1.656.912,5.779,5.779,0,0,1-1.912.32q-.208,0-.64-.032h-.048A8.025,8.025,0,0,0-2.592.08a8.283,8.283,0,0,0,3.5-.736,7.775,7.775,0,0,0,2.56-1.92A8.583,8.583,0,0,0,5.04-5.2a8.228,8.228,0,0,0,.528-2.88v-.384A5.792,5.792,0,0,0,7.008-9.952Z"
+                              transform="translate(7.008 11.296)" fill="#95ca33" />
+                        </svg>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="s130F_social_media_item">
+                    <a href="#" class="s130F_social_media_link">
+                      <span class="s130F_social_media_icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="10.848"
+                          height="14.004"
+                          viewBox="0 0 10.848 14.004"
+                        >
+                          <path id="Path_1686" data-name="Path 1686"
+                              d="M.336-12.608a6.306,6.306,0,0,0-3.2.8,5.218,5.218,0,0,0-1.92,1.9,4.616,4.616,0,0,0-.64,2.32,4.175,4.175,0,0,0,.4,1.888A2.326,2.326,0,0,0-3.776-4.512.312.312,0,0,0-3.52-4.5.261.261,0,0,0-3.376-4.7l.176-.64a.532.532,0,0,0,.008-.24.637.637,0,0,0-.136-.208,2.406,2.406,0,0,1-.528-1.584,3.907,3.907,0,0,1,.488-1.912A3.6,3.6,0,0,1-2-10.688a4.1,4.1,0,0,1,2.112-.544,3.776,3.776,0,0,1,1.824.416,2.69,2.69,0,0,1,1.128,1.08,3.188,3.188,0,0,1,.392,1.592A6.849,6.849,0,0,1,3.136-6a3.709,3.709,0,0,1-.9,1.536A1.853,1.853,0,0,1,.9-3.872,1.32,1.32,0,0,1,.16-4.08a1.233,1.233,0,0,1-.472-.568,1.235,1.235,0,0,1-.056-.776q.1-.384.336-1.152Q.16-7.2.24-7.488a3.606,3.606,0,0,0,.112-.784A1.265,1.265,0,0,0,.08-9.12a.976.976,0,0,0-.816-.368,1.251,1.251,0,0,0-.784.272,1.86,1.86,0,0,0-.56.752,2.669,2.669,0,0,0-.208,1.072,3.337,3.337,0,0,0,.064.656,2.747,2.747,0,0,0,.128.448l.064.16-1.04,4.384A8.421,8.421,0,0,0-3.1,1.216l.016.1a.1.1,0,0,0,.08.08A.111.111,0,0,0-2.9,1.36l.048-.048A8.075,8.075,0,0,0-1.44-1.28l.56-2.208a1.7,1.7,0,0,0,.768.712,2.53,2.53,0,0,0,1.2.3A3.758,3.758,0,0,0,3.36-3.216a4.717,4.717,0,0,0,1.512-1.96A6.948,6.948,0,0,0,5.424-8a4.321,4.321,0,0,0-.64-2.264,4.539,4.539,0,0,0-1.76-1.672A5.406,5.406,0,0,0,.336-12.608Z"
+                              transform="translate(5.424 12.608)" fill="#95ca33" />
+                        </svg>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="s130F_social_media_item">
+                    <a href="#" class="s130F_social_media_link">
+                      <span class="s130F_social_media_icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="13.92"
+                          height="14.016"
+                          viewBox="0 0 13.92 14.016"
+                        >
+                          <path id="Path_1685" data-name="Path 1685"
+                              d="M5.936-12.608H-5.92a1.016,1.016,0,0,0-.736.3.958.958,0,0,0-.3.712V.4a.958.958,0,0,0,.3.712,1.016,1.016,0,0,0,.736.3H5.936a1,1,0,0,0,.72-.3A.958.958,0,0,0,6.96.4v-12a.958.958,0,0,0-.3-.712A1,1,0,0,0,5.936-12.608ZM-2.736-.88h-2.1V-7.2h2.1ZM-3.792-8.064h-.016a1.141,1.141,0,0,1-.832-.312,1.049,1.049,0,0,1-.32-.784,1.037,1.037,0,0,1,.328-.784,1.191,1.191,0,0,1,.856-.312,1.163,1.163,0,0,1,.848.312,1.049,1.049,0,0,1,.32.784,1.049,1.049,0,0,1-.32.784A1.185,1.185,0,0,1-3.792-8.064ZM4.832-.88h-2.1V-4.272A1.816,1.816,0,0,0,2.5-5.3a.921.921,0,0,0-.816-.4,1.1,1.1,0,0,0-.7.24,1.5,1.5,0,0,0-.384.528,1.665,1.665,0,0,0-.064.512V-.88h-2.1V-3.824q.016-3.008,0-3.376h2.1v.9a2.1,2.1,0,0,1,1.888-1.04,2.246,2.246,0,0,1,1.728.688,3.065,3.065,0,0,1,.688,2.144Z"
+                              transform="translate(6.96 12.608)" fill="#95ca33" />
+                        </svg>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  let product = {{ product |  json }}
+  console.log("product" , product);
+
+  document.querySelectorAll('.product_option input[type="radio"]').forEach(radio =>{
+    radio.addEventListener("change" , function(){
+
+    //  selected option empty obj.
+    let selctedOptions = [];
+    document.querySelectorAll('.product_option input[type="radio"]:checked').forEach(radio =>{
+      selctedOptions.push(radio.value);
+    });
+
+    let matchedVarient = product.variants.find(varient =>{
+      let pass = true
+      for (let i = 0; i < selctedOptions.length; i++) {
+       if(selctedOptions.indexOf(varient.options[i]) === -1 ){
+            pass = false
+            break;
+       }
+
+      }
+      return pass
+    })
+    console.log("matchedVarient" , matchedVarient);
+    // update product form variant id
+    document.getElementById("product_variant_id").value = matchedVarient.id
+
+    //price chnage 
+    document.querySelector(".compare_price").textContent = formatMoney(matchedVarient.price,"{{ shop.money_format }}") ;
+    document.querySelector(".product_price").textContent = formatMoney(matchedVarient.compare_at_price,"{{ shop.money_format }}") ;
+
+    //disabled add to cart button when selecte4d variant is not available
+    if(matchedVarient.available ==  false){
+      document.querySelector(".s130F_cart_btn").classList.add("disabled")
+    }else{
+      document.querySelector(".s130F_cart_btn").classList.remove("disabled");
+    }
+    
+
+
+    })
+  })
+</script>

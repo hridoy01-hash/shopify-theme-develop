@@ -15,7 +15,7 @@
         </div>
       </div>
       <!-- s1308_all_items_bottom -->
-      {%  if collections %} 
+      {% if collections %}
         <div class="s1308_all_items_bottom">
           <!-- s1308_all_products -->
           <div class="s1308_all_products">
@@ -58,29 +58,33 @@
                     <div class="s1308_product_name_wrapper">
                       <p class="s1308_product_name">{{ item.title }}</p>
                     </div>
-  
+
                     <div class="s1308_price_box_hidden">
-                      <div class="s1308_price_box_hidden_wrapper">
+                      <div class="s1308_price_box_hidden_wrapper" style="display: flex; flex-direction:column">
                         <div class="s1308_product_price_wrapper">
                           <span class="s1308_product_price s1308_product_present_price">
                             {% if item.price_varies %}
                               From {{ item.price_min | money }} - {{ item.price_max | money -}}
-  
+
                             {% elsif item.compare_at_price %}
-                              {{ item.price | money_with_currency }}  <del>{{ item.compare_at_price | money }}</del>
-  
+                              {{ item.price | money_with_currency }}
+                              <del>{{ item.compare_at_price | money }}</del>
+
                             {% else %}
                               {{ item.price | money_with_currency }}
                             {% endif %}
                           </span>
+                        </div>
+                        <div style="width: 100%;padding:6px 5px; background-color:rgb(218, 233, 228);text-align:center;"> 
+                          <a style="text-decoration: none;color:black" href="{{ item.url }}"> view details </a>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              {%- else -%}
-                <h3 class="text-center">Please Select a Category what you want to Featured</h3>
+            {%- else -%}
+              <h3 class="text-center">Please Select a Category what you want to Featured</h3>
             {% endfor %}
           </div>
           <!-- s1308_all_items_btn_wrapper -->
@@ -91,7 +95,6 @@
           </div>
         </div>
       {% endif %}
-     
     </div>
   </div>
 </section>
@@ -119,8 +122,8 @@
       "category": "collections",
       "blocks": [],
       "settings": {
-        "CollectionTitle" : "Write title",
-        "collection" : "outdoor-collection"
+        "CollectionTitle": "Write title",
+        "collection": "outdoor-collection"
       }
     }
   ]
