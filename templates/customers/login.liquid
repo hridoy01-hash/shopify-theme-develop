@@ -1,87 +1,123 @@
-<div class="form-success hide" data-reset-success>
-  {{ 'customer.recover_password.success' | t }}
+<style>
+  .login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .login-container h2 {
+    text-align: center;
+    color: #333;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .form-group button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .form-group button:hover {
+    background-color: #2980b9;
+  }
+
+  .form-group .forgot-password {
+    text-align: right;
+    margin-top: 10px;
+  }
+  .recover_form_wrapper {
+    display: none;
+  }
+  .errors ul {
+    list-style: none;
+    color: red;
+    padding-left: 0px;
+  }
+  #my_button {
+    padding: 10px 8px !important;
+    border: none !important;
+    outline: none;
+    background-color: #0d6efd !important;
+    color: white !important;
+    border-radius: 5px !important;
+  }
+</style>
+<div class="login-container login_form_wrapper">
+  <h2>Customer Login</h2>
+
+  <div id="loginForm">
+    {% form 'customer_login' %}
+      {{ form.errors | default_errors }}
+      <div class="form-group">
+        <label for="useremail">Useremail:</label>
+        <input type="email" id="useremail" name="customer[email]" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="customer[password]" required>
+      </div>
+      <div class="form-group">
+        <button type="submit">Login</button>
+      </div>
+      <div class="form-group forgot-password">
+        <p id="forgot">Forgot Password? <span style="cursor: pointer;color:#0d6efd">Recover</span></p>
+      </div>
+      <p class="text-center">Don't have an account?  <a href="{{ routes.account_register_url }}">Create account</a></p> 
+    {% endform %}
+  </div>
 </div>
 
-<div data-login-form>
-  {% form 'customer_login' %}
-    <h1>{{ 'customer.login.title' | t }}</h1>
+<div class="login-container recover_form_wrapper">
+  <h2>Recover Password</h2>
+  <div class="reset_email_form mt-5">
+    {% form 'recover_customer_password' %}
+      {{ form.errors | default_errors }}
+      <div class="form-group">
+        <label for="useremail">Useremail:</label>
+        <input type="email" id="useremail" name="email" required>
+      </div>
 
-    {{ form.errors | default_errors }}
-
-    <label for="CustomerEmail" class="label-hidden">
-      {{ 'customer.login.email' | t }}
-    </label>
-    <input type="email"
-           name="customer[email]"
-           id="CustomerEmail"
-           class="{% if form.errors contains 'email' %}input-error{% endif %}"
-           placeholder="{{ 'customer.login.email' | t }}"
-           spellcheck="false"
-           autocomplete="off"
-           autocapitalize="off"
-           autofocus>
-
-    {% if form.password_needed %}
-      <label for="CustomerPassword" class="label-hidden">
-        {{ 'customer.login.password' | t }}
-      </label>
-      <input type="password"
-             name="customer[password]"
-             id="CustomerPassword"
-             class="{% if form.errors contains 'password' %}input-error{% endif %}"
-             placeholder="{{ 'customer.login.password' | t }}">
-    {% endif %}
-
-    <input type="submit" class="button" value="{{ 'customer.login.sign_in' | t }}">
-
-    <a href="/">{{ 'customer.login.cancel' | t }}</a>
-
-    <a href="/account/register">
-      {{ 'layout.customer.create_account' | t }}
-    </a>
-
-    {% if form.password_needed %}
-      <a href="#recover" data-recover-toggle>{{ 'customer.login.forgot_password' | t }}</a>
-    {% endif %}
-  {% endform %}
-
+      <div class="form-group submit">
+        <input class="btn-primary" type="submit" value="Submit">
+      </div>
+    {% endform %}
+    <span id="recover_cancel" style="cursor: pointer;font-weight: bold;">Cancel</span>
+  </div>
 </div>
 
-<div class="hide" data-recover-form>
-  <h2>{{ 'customer.recover_password.title' | t }}</h2>
-  <p>{{ 'customer.recover_password.subtext' | t }}</p>
+<script>
+  const loginForm = document.querySelector('.recover_form_wrapper');
 
-  {% form 'recover_customer_password' %}
-    {{ form.errors | default_errors }}
-
-    {% if form.posted_successfully? %}
-      <span class="hide" data-form-state></span>
-    {% endif %}
-
-    <label for="RecoverEmail" class="label-hidden">
-      {{ 'customer.recover_password.email' | t }}
-    </label>
-    <input type="email"
-           name="email"
-           id="RecoverEmail"
-           placeholder="{{ 'customer.recover_password.email' | t }}"
-           spellcheck="false"
-           autocomplete="off"
-           autocapitalize="off">
-
-    <input type="submit" class="button" value="{{ 'customer.recover_password.submit' | t }}">
-
-    <button type="button" data-recover-toggle>
-      {{ 'customer.recover_password.cancel' | t }}
-    </button>
-  {% endform %}
-
-</div>
-
-{% if shop.checkout.guest_login %}
-  <h2>{{ 'customer.login.guest_title' | t }}</h2>
-
-  {% form 'guest_login' %}
-    <input type="submit" class="button" value="{{ 'customer.login.guest_continue' | t }}">
-  {% endform %}
-{% endif %}
+  document.getElementById('forgot').addEventListener('click', function () {
+    loginForm.style.display = `block`;
+    document.querySelector('.login_form_wrapper').style.display = `none`;
+  });
+  document.getElementById('recover_cancel').addEventListener('click', function () {
+    loginForm.style.display = `none`;
+    document.querySelector('.login_form_wrapper').style.display = `block`;
+  });
+</script>

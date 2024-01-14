@@ -1,51 +1,93 @@
-<h1>{{ 'customer.register.title' | t }}</h1>
+<style>
+    body {
+      font-family: 'Arial', sans-serif;
+  }
 
-{% form 'create_customer' %}
-  {{ form.errors | default_errors }}
+  .register_register_container {
+      max-width: 400px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
 
-  <label for="FirstName" class="label-hidden">
-    {{ 'customer.register.first_name' | t }}
-  </label>
-  <input type="text"
-    name="customer[first_name]"
-    id="FirstName"
-    placeholder="{{ 'customer.register.first_name' | t }}"
-    autofocus
-    {% if form.first_name %}value="{{ form.first_name }}"{% endif %}>
+  #registrationForm {
+      display: flex;
+      flex-direction: column;
+  }
 
-  <label for="LastName" class="label-hidden">
-    {{ 'customer.register.last_name' | t }}
-  </label>
-  <input type="text"
-    name="customer[last_name]"
-    id="LastName"
-    placeholder="{{ 'customer.register.last_name' | t }}"
-    {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+  label {
+      margin-bottom: 8px;
+  }
 
-  <label for="Email" class="label-hidden">
-    {{ 'customer.register.email' | t }}
-  </label>
-  <input type="email"
-    name="customer[email]"
-    id="Email"
-    class="{% if form.errors contains 'email' %}input-error{% endif %}"
-    placeholder="{{ 'customer.register.email' | t }}"
-    value="{% if form.email %}{{ form.email }}{% endif %}"
-    spellcheck="false"
-    autocomplete="off"
-    autocapitalize="off">
+  input {
+      padding: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+  }
 
-  <label for="CreatePassword" class="label-hidden">
-    {{ 'customer.register.password' | t }}
-  </label>
-  <input type="password"
-    name="customer[password]"
-    id="CreatePassword"
-    class="{% if form.errors contains 'password' %}input-error{% endif %}"
-    placeholder="{{ 'customer.register.password' | t }}">
+  .submit_btn {
+      padding: 10px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+  }
 
-  <p>
-    <input type="submit" value="{{ 'customer.register.submit' | t }}" class="button">
-  </p>
-  <a href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a>
-{% endform %}
+  .submit_btn:hover {
+      background-color: #2980b9;
+  }
+  .form_label{
+
+      display=flex: ;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+  }
+  .submit_btn{
+
+      width: 100%;
+  }
+  .errors ul{
+    list-style: none;
+    color:red;
+    padding-left: 0px;
+  }
+</style>
+
+<div class="container register_register_container">
+  <h2 class="text-center mb-5">Customer Register</h2>
+  {% form 'create_customer' %}
+    {{ form.errors | default_errors }}
+
+    <div class="first-name form_label">
+      <label for="first-name">First name</label>
+      <input type="text" name="customer[first_name]">
+    </div>
+
+    <div class="last-name form_label">
+      <label for="last-name">Last name</label>
+      <input type="text" name="customer[last_name]">
+    </div>
+
+    <div class="email form_label">
+      <label for="email">Email</label>
+      <input type="email" name="customer[email]">
+    </div>
+
+    <div class="password form_label">
+      <label for="password">Password</label>
+      <input type="password" name="customer[password]">
+    </div>
+
+    <div class="submit">
+      <input class="submit_btn" type="submit" value="Create Account">
+    </div>
+
+    <p>Already have an account? <a style="text-decoration:none" href="{{ routes.account_login_url }}">Login</a></p>
+  {% endform %}
+</div>

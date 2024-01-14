@@ -39,6 +39,29 @@ body {
     position: relative;
     z-index: 3;
 }
+.button_wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+.button_wrapper span{
+    height: 40px;
+    width: 40px;
+    border: 1px solid yellowgreen;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+svg{
+    display: flex;
+}
+.button_wrapper button{
+    background: none;
+    outline: none;
+    border: none;
+}
 
 /* s1306_home_top_categories_section */
 .s1306_home_top_categories_section {
@@ -252,3 +275,6 @@ body {
         row-gap: 40px;
     }
 }
+
+
+
