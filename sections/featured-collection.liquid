@@ -50,11 +50,11 @@
                           </span>
                         </div>
 
-                        {%- form 'product', item, return_to: 'back' -%}
+                        {%- form 'product', item -%}
                           <div class="button_wrapper">
                             <input name="id" type="hidden" value="{{ item.selected_or_first_available_variant.id}}">
                             <button type="submit" name="add">
-                              <span id="cart">
+                              <span id="cart" class="add_cart">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   width="25"
@@ -137,6 +137,3 @@
 }
 {% endschema %}
 
-<script>
-  console.log();
-</script>
