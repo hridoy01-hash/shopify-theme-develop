@@ -42,6 +42,7 @@ let formatMoney = function (cents, format) {
     return formatString.replace(placeholderRegex, value);
 };
 
+// pass item quantity and data key
 document.querySelectorAll(".qunty_wraperr .icon_wrapper").forEach((button) => {
     button.addEventListener("click", function () {
         // get input quantity
@@ -63,6 +64,43 @@ document.querySelectorAll(".qunty_wraperr .icon_wrapper").forEach((button) => {
     });
 });
 
+// remove single item from cart
+document.querySelectorAll(".remove_line_item").forEach((remove) => {
+    remove.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const item = remove.closest(".cart_item");
+        const key = item.getAttribute("data-key");
+
+        axios.post("/cart/change.js", {
+            id: key,
+            quantity: 0,
+        })
+            .then((res) => {
+                const updateCart = res.data;
+                if (updateCart.item_count == 0) {
+                    document.querySelector("#cart_form").remove();
+                    const cartHeading = document.createElement("div");
+                    cartHeading.innerHTML = `
+                    <div class="cart_heading">
+                      <div class="cart_empty_content text-center">
+                        <h3>Your cart is empty.</h3><br>
+                        <a class="btn btn-primary text-center" href="{{ routes.root_url  }}">Keep Shopping</a>
+                      </div>
+                  </div>
+                    `;
+                    document.querySelector(".cart_main_container").appendChild(cartHeading);
+                    document.querySelector(".cart_count_number").textContent = `${updateCart.item_count}`;
+                } else {
+                    item.remove();
+                    document.querySelector(".cart_count_number").textContent = `${updateCart.item_count}`;
+                }
+
+            });
+    });
+});
+
+// update cart object
 function changeItemQuantity(key, quantity) {
     console.log({ quantity, key });
 
@@ -80,6 +118,10 @@ function changeItemQuantity(key, quantity) {
             document.querySelector(`[data-key="${key}"] .line_total_price`).textContent = formatMoney(finalLinePrice, format);
 
             document.querySelector(".total_item_final_price").textContent = formatMoney(`${cart.total_price}`, format);
+
+            // update header cart item count number
+            document.querySelector(".cart_count_number").textContent = `${cart.item_count}`;
         });
 
 }
+
