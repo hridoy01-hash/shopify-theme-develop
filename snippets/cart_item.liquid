@@ -79,7 +79,9 @@
         {% endfor %}
         <tr>
           <td>
-            <textarea name="note" form="cart" placeholder="Order Note "></textarea>
+            <div class="cart_note">
+              <textarea name="note" id="" cols="40" rows="4" placeholder="Cart Note...">{{ cart.note }}</textarea>
+            </div>
           </td>
           <td></td>
           <td></td>

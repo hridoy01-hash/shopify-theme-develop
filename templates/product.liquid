@@ -91,7 +91,7 @@
                   </fieldset>
                 </div>
               {%- endunless -%}
-             
+
               {%- render 'quantity' -%}
               <!-- s130F_cart_btn_and_wishlist_icon_wrapper -->
               <div class="s130F_cart_btn_and_wishlist_icon_wrapper">
@@ -99,6 +99,7 @@
                   Add to Cart
                 </button>
                 <button style="color:white;" type="button" class="s130F_cart_btn">{{ form | payment_button }}</button>
+               
               </div>
             {% endform %}
             <!-- s130F_product_return_policy_wrapper -->

@@ -1,1 +1,35 @@
-<h2 class="text-center mt-5"> Wishlist products</h2>
+<h2 class="text-center mt-5 txt">Your wishlist products</h2>
+
+<div class="container">
+  <div class="card mt-5" style="width: 18rem;">
+    <img src="..." class="card-img-top product_img" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Product title</h5>
+      <p class="card-text">Product Price</p>
+      <a href="#" class="btn btn-primary w-100 product_view">Product Details</a>
+      <a href="#" class="btn btn-primary w-100 mt-3">Add to cart</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const getData = localStorage.getItem('wishlistObject');
+  let getStoredData = JSON.parse(getData);
+  console.log('getStoredData', getStoredData);
+
+  for (let i = 0; i < getStoredData.length; i++) {
+    const element = getStoredData[i];
+    console.log('element', element.productHandle);
+
+    // document.querySelector('.txt').textContent = `${element.key}`;
+
+    fetch(`/products/${element.productHandle}.js`)
+      .then((response) => response.json())
+      .then((product) => {
+        document.querySelector('.product_img').src = `${product.featured_image}`;
+        document.querySelector('.card-title').textContent = `${product.title}`;
+        document.querySelector('.product_view').href = `${product.url}`;
+        document.querySelector('.card-text').textContent = `Price : BDT ${product.price}Tk`;
+      });
+  }
+</script>

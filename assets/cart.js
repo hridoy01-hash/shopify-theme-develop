@@ -1,3 +1,4 @@
+// money format
 let formatMoney = function (cents, format) {
     if (typeof cents == 'string') { cents = cents.replace('.', ''); }
     var value = '';
@@ -40,6 +41,22 @@ let formatMoney = function (cents, format) {
     }
 
     return formatString.replace(placeholderRegex, value);
+};
+
+// js debaounce function
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function () {
+        var context = this, args = arguments;
+        var later = function () {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
 };
 
 // pass item quantity and data key
@@ -99,6 +116,15 @@ document.querySelectorAll(".remove_line_item").forEach((remove) => {
             });
     });
 });
+
+// update cart note
+document.querySelector('[name="note"]').addEventListener("keyup", debounce((e) => {
+    console.log("e.target.value", e.target.value);
+
+    axios.post('cart/update.js', {
+        note: e.target.value
+    })
+}, 500));
 
 // update cart object
 function changeItemQuantity(key, quantity) {
