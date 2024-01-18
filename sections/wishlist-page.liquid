@@ -1,29 +1,19 @@
 <h2 class="text-center mt-5 txt">Your wishlist products</h2>
 
-<div class="container">
-  <div class="card mt-5" style="width: 18rem;">
-    <img src="..." class="card-img-top product_img" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Product title</h5>
-      <p class="card-text">Product Price</p>
-      <a href="#" class="btn btn-primary w-100 product_view">Product Details</a>
-      <a href="#" class="btn btn-primary w-100 mt-3">Add to cart</a>
-    </div>
-  </div>
-</div>
+<div class="container wishlist_product_container" style="display: flex; gap:20px"></div>
 
 <script>
-  const getData = localStorage.getItem('wishlistObject');
+  /* const getData = localStorage.getItem('wishlistObject');
   let getStoredData = JSON.parse(getData);
   console.log('getStoredData', getStoredData);
 
   for (let i = 0; i < getStoredData.length; i++) {
     const element = getStoredData[i];
-    console.log('element', element.productHandle);
+    console.log('element', element.product_handle);
 
     // document.querySelector('.txt').textContent = `${element.key}`;
 
-    fetch(`/products/${element.productHandle}.js`)
+    fetch(`/products/${element.product_handle}.js`)
       .then((response) => response.json())
       .then((product) => {
         document.querySelector('.product_img').src = `${product.featured_image}`;
@@ -31,5 +21,71 @@
         document.querySelector('.product_view').href = `${product.url}`;
         document.querySelector('.card-text').textContent = `Price : BDT ${product.price}Tk`;
       });
+  } */
+
+  const wishlistList = localStorage.getItem('wishListAdd');
+  let getStoredData = JSON.parse(wishlistList);
+  console.log('wishlistList', getStoredData);
+
+  async function fetchData(item) {
+    try {
+      const response = await fetch(`/products/${item}.js`);
+      const product = await response.json();
+
+      // Process the data as needed
+      console.log(`Data for ${item}:`, product.title);
+
+      const SinglewishListProduct = elementMaker('div', ['single_wishlist_product']);
+      SinglewishListProduct.innerHTML = ` 
+      <img style="width:100%;height:200px;display:block;" src="${product.featured_image}">
+      ${product.title} <br>BDT ${product.price}Tk <br> ${product.vendor}`;
+
+      document.querySelector('.wishlist_product_container').appendChild(SinglewishListProduct);
+    } catch (error) {
+      console.error(`Error fetching data for ${item}:`, error);
+    }
+  }
+
+  async function fetchAllData() {
+    for (const item of getStoredData) {
+      await fetchData(item);
+    }
+  }
+
+  // Call the function to start fetching data for each item
+  fetchAllData();
+
+  // create element fucntion
+  function elementMaker(name, className, id) {
+    try {
+      let element = document.createElement(name);
+      className && (element.className = className.join(' '));
+      id && (element.id = id);
+      return element;
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  function setAttributes(elementName, allAttributes) {
+    for (let key in allAttributes) {
+      elementName.setAttribute(key, allAttributes[key]);
+    }
   }
 </script>
+
+<style>
+  .product_name {
+    width: 200px;
+    height: 200px;
+    margin-top: 100px;
+    margin-bottom: 500px;
+  }
+  .wishlist_product_container {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 35px !important;
+    margin-top: 50px;
+    margin-bottom: 150px;
+  }
+</style>
