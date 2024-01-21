@@ -149,11 +149,23 @@
       const wishListProductID = btn.getAttribute('data-product-id');
       const wishListProductHandle = btn.getAttribute('data-wishlist-handle');
 
-      console.log('wishListProductID', wishListProductID);
-      console.log('wishListProductHandle', wishListProductHandle);
+      /* console.log('wishListProductID', wishListProductID);
+      console.log('wishListProductHandle', wishListProductHandle); */
 
       const selectItem = wishListProductHandle;
-      WishAddedArray.push(selectItem);
+
+      const previousProduct = localStorage.getItem('wishListAdd');
+      const prevoiustLocalStorage = JSON.parse(previousProduct);
+
+      if (prevoiustLocalStorage != null) {
+        WishAddedArray = [...prevoiustLocalStorage];
+      }
+
+      if (WishAddedArray.includes(selectItem)) {
+        return;
+      } else {
+        WishAddedArray.push(selectItem);
+      }
 
       const setProductHandle = JSON.stringify(WishAddedArray);
       localStorage.setItem('wishListAdd', setProductHandle);

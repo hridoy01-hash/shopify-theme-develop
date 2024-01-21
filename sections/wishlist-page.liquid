@@ -3,29 +3,11 @@
 <div class="container wishlist_product_container" style="display: flex; gap:20px"></div>
 
 <script>
-  /* const getData = localStorage.getItem('wishlistObject');
-  let getStoredData = JSON.parse(getData);
-  console.log('getStoredData', getStoredData);
-
-  for (let i = 0; i < getStoredData.length; i++) {
-    const element = getStoredData[i];
-    console.log('element', element.product_handle);
-
-    // document.querySelector('.txt').textContent = `${element.key}`;
-
-    fetch(`/products/${element.product_handle}.js`)
-      .then((response) => response.json())
-      .then((product) => {
-        document.querySelector('.product_img').src = `${product.featured_image}`;
-        document.querySelector('.card-title').textContent = `${product.title}`;
-        document.querySelector('.product_view').href = `${product.url}`;
-        document.querySelector('.card-text').textContent = `Price : BDT ${product.price}Tk`;
-      });
-  } */
-
   const wishlistList = localStorage.getItem('wishListAdd');
   let getStoredData = JSON.parse(wishlistList);
   console.log('wishlistList', getStoredData);
+
+  console.log('getStoredData', getStoredData.length);
 
   async function fetchData(item) {
     try {
@@ -33,16 +15,20 @@
       const product = await response.json();
 
       // Process the data as needed
-      console.log(`Data for ${item}:`, product.title);
+      // console.log(`Data for ${item}:`, product.title);
 
       const SinglewishListProduct = elementMaker('div', ['single_wishlist_product']);
       SinglewishListProduct.innerHTML = ` 
       <img style="width:100%;height:200px;display:block;" src="${product.featured_image}">
-      ${product.title} <br>BDT ${product.price}Tk <br> ${product.vendor}`;
+      ${product.title} <br>BDT ${product.price}Tk <br> ${product.vendor} <br> <a class="btn btn-primary w-100 mt-4" href="${product.url}">View Details</a> <span title="Remove From Wishlist" data-product-handle=${product.handle} class="remove_wishlist_icon" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+    </svg></span>`;
 
       document.querySelector('.wishlist_product_container').appendChild(SinglewishListProduct);
+
+      SinglewishListProduct.setAttributes('product-handle-key', `${product.handle}`);
     } catch (error) {
-      console.error(`Error fetching data for ${item}:`, error);
+      // console.error(`Error fetching data for ${item}:`, error);
     }
   }
 
@@ -54,6 +40,49 @@
 
   // Call the function to start fetching data for each item
   fetchAllData();
+
+  // remove from wishlist
+  window.addEventListener('DOMContentLoaded', function () {
+    setTimeout(() => {
+      const single_wishlist_product = document.querySelector('.wishlist_product_container');
+      if (single_wishlist_product) {
+        document.querySelectorAll('.remove_wishlist_icon').forEach((removeButton) => {
+          removeButton.addEventListener('click', function () {
+            const productRemoveKey = removeButton.getAttribute('data-product-handle');
+            // console.log('productRemoveKey', productRemoveKey);
+            removeFromLocalStorage(productRemoveKey);
+            const removeItem = removeButton.closest(".single_wishlist_product");
+            removeItem.remove();
+          });
+        });
+      }
+    }, 2000);
+  });
+
+  // Function to remove an item from local storage by its value
+  function removeFromLocalStorage(valueToRemove) {
+    console.log('valueToRemove', valueToRemove);
+    const getLocalItem = localStorage.getItem('wishListAdd');
+    const GetArrayLocalItem = JSON.parse(getLocalItem);
+    console.log('GetArrayLocalItem', GetArrayLocalItem);
+
+    // Item to remove (change this to the item you want to remove)
+    var itemToRemove = valueToRemove;
+
+    // Find the index of the item in the array
+    var indexToRemove = GetArrayLocalItem.indexOf(itemToRemove);
+
+    // Check if the item is in the array before removing
+    if (indexToRemove !== -1) {
+      // Use splice to remove the item
+      GetArrayLocalItem.splice(indexToRemove, 1);
+      console.log('Item removed successfully');
+      const updateWishList = JSON.stringify(GetArrayLocalItem);
+      localStorage.setItem("wishListAdd" , updateWishList);
+    } else {
+      console.log('Item not found in the array');
+    }
+  }
 
   // create element fucntion
   function elementMaker(name, className, id) {
@@ -87,5 +116,16 @@
     gap: 35px !important;
     margin-top: 50px;
     margin-bottom: 150px;
+  }
+  .single_wishlist_product {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 10px;
+    position: relative;
+  }
+  .remove_wishlist_icon {
+    position: absolute;
+    top: 0;
+    right: -10px;
+    cursor: pointer;
   }
 </style>
