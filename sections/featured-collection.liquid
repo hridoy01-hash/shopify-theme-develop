@@ -169,6 +169,14 @@
 
       const setProductHandle = JSON.stringify(WishAddedArray);
       localStorage.setItem('wishListAdd', setProductHandle);
+
+      document.querySelector('.wishlist_count_number').textContent = `${WishAddedArray.length}`;
+      if (WishAddedArray.length == 0) {
+        document.querySelector('.wishlist_product_container').textContent = 'Wishlist is Empty';
+      }
+
+      btn.style.backgroundColor = `black`;
+      btn.style.color = `white`;
     });
   });
 </script>

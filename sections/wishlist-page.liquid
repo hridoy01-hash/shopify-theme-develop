@@ -1,5 +1,5 @@
-<h2 class="text-center mt-5 txt">Your wishlist products</h2>
-
+<h1 class="text-center mt-5 txt">Your Wishlist</h1>
+<h3 class="text-center mt-5 txt empty_wishlist_message"></h3>
 <div class="container wishlist_product_container" style="display: flex; gap:20px"></div>
 
 <script>
@@ -51,7 +51,7 @@
             const productRemoveKey = removeButton.getAttribute('data-product-handle');
             // console.log('productRemoveKey', productRemoveKey);
             removeFromLocalStorage(productRemoveKey);
-            const removeItem = removeButton.closest(".single_wishlist_product");
+            const removeItem = removeButton.closest('.single_wishlist_product');
             removeItem.remove();
           });
         });
@@ -78,7 +78,14 @@
       GetArrayLocalItem.splice(indexToRemove, 1);
       console.log('Item removed successfully');
       const updateWishList = JSON.stringify(GetArrayLocalItem);
-      localStorage.setItem("wishListAdd" , updateWishList);
+      localStorage.setItem('wishListAdd', updateWishList);
+
+      const previousProduct = localStorage.getItem('wishListAdd');
+      const prevoiustLocalStorage = JSON.parse(previousProduct);
+      document.querySelector('.wishlist_count_number').textContent = `${prevoiustLocalStorage.length}`;
+      if (prevoiustLocalStorage.length == 0) {
+        document.querySelector('.empty_wishlist_message').textContent = `Wishlist is Empty`;
+      }
     } else {
       console.log('Item not found in the array');
     }

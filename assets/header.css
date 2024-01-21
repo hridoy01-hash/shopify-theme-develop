@@ -85,6 +85,13 @@ svg {
 .cart_count_number {
     position: absolute;
     top: -11px;
-    right: -11px;
+    right: -9px;
+    font-size: 14px;
+}
+
+.wishlist_count_number {
+    position: absolute;
+    top: -11px;
+    right: -18px;
     font-size: 14px;
 }
