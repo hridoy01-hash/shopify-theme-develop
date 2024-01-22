@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="product_inner_content">
+    <div class="row">
+      <div class="col-md-6">
+        <img class="product_display_image" src="" alt="">
+        <div class="product_galary_wrapper">
+          <ul class="product_galary_item"></ul>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="product text_content_wrapper">
+          <div class="vendor_wrapper">
+            <span class="vendor_name"></span>
+          </div>
+          <div class="product_name_wrapper">
+            <h2 class="product_name"></h2>
+          </div>
+          <div class="price_wrapper">
+            <span class="selling_price"></span>
+            <span class="compare_at_price"></span>
+          </div>
+          <div class="product_description_wrapper">
+            <span class="product_desciption"></span>
+          </div>
+          <div class="quantitil_wrapper">
+            {%- render 'quantity' -%}
+          </div>
+          <!-- s130F_cart_btn_and_wishlist_icon_wrapper -->
+          <form method="post" action="/cart/add">
+            <div class="s130F_cart_btn_and_wishlist_icon_wrapper">
+            <button type="submit" value="Add to cart" style="color:white" type="button" class="s130F_cart_btn">
+              Add to Cart
+            </button>
+            <button style="color:white;" type="button" class="s130F_cart_btn">Buy it now</button>
+          </div>
+          </form>
+        </div>
+      </div>
+      <div class="close_btn_wrapper">
+        <span class="close_btn">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 44 64">
+            <path d="M0 48.64q0-2.304 1.664-3.968l12.48-12.48-12.48-12.544q-1.664-1.6-1.664-3.904t1.664-3.904 3.904-1.6 3.904 1.6l12.544 12.544 12.48-12.544q1.6-1.6 3.904-1.6t3.904 1.6 1.6 3.904-1.6 3.904l-12.48 12.544 12.48 12.48q1.6 1.664 1.6 3.968t-1.6 3.904-3.904 1.6-3.904-1.6l-12.48-12.48-12.544 12.48q-1.6 1.6-3.904 1.6t-3.904-1.6q-1.664-1.664-1.664-3.904z"></path>
+          </svg>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

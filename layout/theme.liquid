@@ -24,7 +24,7 @@
     <script src="{{ 'product.js' |  asset_url  }}" defer="defer"></script>
     <script src="{{ 'featured.js' |  asset_url  }}" defer="defer"></script>
     <script src="{{ 'add-cart.js' |  asset_url  }}" defer="defer"></script>
-    <script src="{{ 'wishlist_page.js' |  asset_url  }}" defer="defer"></script>
+    <script src="{{ 'quick_view.js' |  asset_url  }}" defer="defer"></script>
   </head>
   <body>
     {% sections 'header-group' %}
@@ -34,6 +34,12 @@
     </div>
 
     {% sections 'footer-group' %}
+
+    <div class="quick_view_wrapper">
+      <div class="quick_view_inner_content_wrapper">
+          {%- section 'quick_view_product_template' -%}
+      </div>
+    </div>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

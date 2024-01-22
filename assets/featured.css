@@ -39,13 +39,15 @@ body {
     position: relative;
     z-index: 3;
 }
-.button_wrapper{
+
+.button_wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 15px;
 }
-.button_wrapper span{
+
+.button_wrapper span {
     height: 40px;
     width: 40px;
     border: 1px solid yellowgreen;
@@ -54,10 +56,12 @@ body {
     justify-content: center;
     cursor: pointer;
 }
-svg{
+
+svg {
     display: flex;
 }
-.button_wrapper button{
+
+.button_wrapper button {
     background: none;
     outline: none;
     border: none;
@@ -218,7 +222,8 @@ svg{
         transition: .3s ease-in-out;
         z-index: 2;
     }
-    .s1306_product_top{
+
+    .s1306_product_top {
         gap: unset;
     }
 
@@ -281,3 +286,8 @@ svg{
     background-color: brown;
     color: white;
 } */
+.s1308_all_items_btn_wrapper {
+    margin-top: 50px;
+    z-index: -444;
+    position: relative;
+}
