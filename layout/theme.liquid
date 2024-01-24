@@ -19,12 +19,16 @@
     {{ 'showslider.css' | asset_url | stylesheet_tag }}
     {{ 'list-collection.css' | asset_url | stylesheet_tag }}
     {{ 'product.css' | asset_url | stylesheet_tag }}
+    {{ 'announcebar.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'showslider.js' |  asset_url }}" defer="defer"></script>
     <script src="{{ 'header.js' |  asset_url }}" defer="defer"></script>
     <script src="{{ 'product.js' |  asset_url  }}" defer="defer"></script>
     <script src="{{ 'featured.js' |  asset_url  }}" defer="defer"></script>
     <script src="{{ 'add-cart.js' |  asset_url  }}" defer="defer"></script>
     <script src="{{ 'quick_view.js' |  asset_url  }}" defer="defer"></script>
+    <script src="{{ 'money.js' |  asset_url  }}" defer="defer"></script>
+    <script src="{{ 'announcebar.js' |  asset_url  }}" defer="defer"></script>
+    
   </head>
   <body>
     {% sections 'header-group' %}

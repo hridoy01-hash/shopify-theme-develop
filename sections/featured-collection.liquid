@@ -3,7 +3,11 @@
   assign CollectionTitle = section.settings.CollectionTitle
 -%}
 
-<section class="s1308_all_items_section s1308_universl">
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="section-type"
+  class="s1308_all_items_section s1308_universl"
+>
   <div class="s1308_container">
     <div class="s1308_all_items_area">
       <!-- s1308_all_items_top -->
@@ -86,9 +90,10 @@
                               </svg>
                             </span>
 
-                            <span class="quick_view_btn"
-                            data-quickView-handle="{{ item.handle }}"
-                            data-money-format = {{ shop.money_format }}
+                            <span
+                              class="quick_view_btn"
+                              data-quickView-handle="{{ item.handle }}"
+                              data-money-format="{{ shop.money_format }}"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"

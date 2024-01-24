@@ -1,0 +1,52 @@
+.carousel-container {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(0, 0, 0) !important;
+    position: relative;
+}
+
+.wrapper-container {
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.text-slide {
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.text-slide p {
+    min-width: 100%;
+    color: #fff !important;
+    padding: 8px 0px;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 0px !important;
+}
+
+.control-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.prev {
+    left: 30%;
+}
+
+.next {
+    right: 30%;
+}
+
+button {
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+}
